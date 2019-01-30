@@ -14,11 +14,11 @@ VERSION=0.6.4
 
 # Directory for Standard .qcl files
 
-QCLDIR = /usr/local/lib/qcl
+QCLDIR = /usr/lib/qcl
 
 # Path for qcl binaries
 
-QCLBIN = /usr/local/bin
+QCLBIN = /usr/bin
 
 ARCH = `g++ -dumpmachine || echo bin`
 
@@ -32,7 +32,7 @@ ARCH = `g++ -dumpmachine || echo bin`
 
 #DEBUG = -g -pg -DQCL_DEBUG -DQC_DEBUG
 #DEBUG = -g -DQCL_DEBUG -DQC_DEBUG
-DEBUG = -O2 -g -DQCL_DEBUG -DQC_DEBUG
+DEBUG = -DQCL_DEBUG -DQC_DEBUG
 #DEBUG = -O2
 
 # Plotting support 
@@ -81,8 +81,8 @@ QCLINC = lib
 
 #CXX = g++
 #CPP = $(CC) -E
-CXXFLAGS = -c $(ARCHOPT) $(DEBUG) $(PLOPT) $(RLOPT) $(IRQOPT) $(ENCOPT) -I$(QCDIR) -DDEF_INCLUDE_PATH="\"$(QCLDIR)\""
-LDFLAGS = $(ARCHOPT) -L$(QCDIR) $(DEBUG) $(PLLIB) -lm -lfl -lqc $(RLLIB) 
+CXXFLAGS += -c $(DEBUG) $(PLOPT) $(RLOPT) $(IRQOPT) $(ENCOPT) -I$(QCDIR) -DDEF_INCLUDE_PATH="\"$(QCLDIR)\""
+LIBS = -L$(QCDIR) $(PLLIB) -lm -lfl -lqc $(RLLIB)
 
 FILESCC = $(wildcard *.cc)
 FILESH = $(wildcard *.h)
@@ -127,7 +127,7 @@ $(QCLIB):
 build: qcl $(QCLINC)/default.qcl
 
 qcl: $(OBJECTS) qcl.o $(QCLIB)
-	$(CXX) $(OBJECTS) qcl.o $(LDFLAGS) -o qcl
+	$(CXX) $(LDFLAGS) $(OBJECTS) qcl.o $(LIBS) -o qcl
 
 $(QCLINC)/default.qcl: extern.cc
 	grep "^//!" extern.cc | cut -c5- > $(QCLINC)/default.qcl

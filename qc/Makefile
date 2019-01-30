@@ -16,7 +16,7 @@
 
 # Debugging options
 
-DEBUG = -g -O2 -DQC_DEBUG
+#DEBUG = -g -O2 -DQC_DEBUG
 #DEBUG = -g -pg -DQC_DEBUG
 #DEBUG = -O2
 
@@ -25,7 +25,7 @@ DEBUG = -g -O2 -DQC_DEBUG
 
 #PRGOPT = -DQC_USE_RAND48
 
-CXXFLAGS = $(ARCHOPT) -c -pedantic -Wall $(DEBUG) $(PRGOPT)
+CXXFLAGS += $(ARCHOPT) -c -pedantic -Wall $(DEBUG) $(PRGOPT)
 
 LDFLAGS = $(ARCHOPT) -L. -lm -lqc
 
